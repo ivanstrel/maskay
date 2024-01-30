@@ -2,7 +2,7 @@ import pathlib
 
 import subprocess
 import numpy as np
-
+import torch
 from maskay.torch import Module
 from maskay.utils import get_models_path, softmax
 
