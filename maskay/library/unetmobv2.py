@@ -1,6 +1,6 @@
 import pathlib
 
-import gdown
+import subprocess
 import numpy as np
 
 from maskay.torch import Module
@@ -67,9 +67,14 @@ def model_setup():
     # Download the model if it doesn't exist
     if not filename.is_file():
         # download file using gdown
-        url = "https://drive.google.com/uc?id=1o9LeVsXCeD2jmS-G8s7ZISfciaP9v-DU"
-        gdown.download(url, filename.as_posix())
+        url = "https://www.dropbox.com/scl/fi/ehkpfck7ref06vvrth1kw/UNetMobV2.ckpt?rlkey=2joyddxg36r1haut1cxwkdhwx&dl=0"
+        subprocess.run(
+            ["wget", "--no-check-certificate", url, "-O", filename.as_posix()]
+        )
     # Load the model
-    model = UnetMobV2Class().load_from_checkpoint(filename.as_posix())
+    map_location = None if torch.cuda.is_available() else torch.device("cpu")
+    model = UnetMobV2Class().load_from_checkpoint(
+        filename.as_posix(), map_location=map_location
+    )
     model.eval()
     return model
