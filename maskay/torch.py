@@ -36,5 +36,8 @@ class Module(MaskayModule):
             if self.device == "cuda":
                 tensor = tensor.cuda()
             tensor = self.forward(tensor).detach().cpu().numpy()
+            # The dirty way around for 5D bug with cpu 
+            if self.device == "cpu":
+                tensor = tensor.squeeze(0)
             torch.cuda.empty_cache()
         return tensor
