@@ -78,7 +78,7 @@ def model_setup():
         )
     # Load the model
     map_location = None if torch.cuda.is_available() else torch.device("cpu")
-    model = UnetMobV2Class().load_from_checkpoint(
+    model = UnetMobV2Class.load_from_checkpoint(
         filename.as_posix(), map_location=map_location
     )
     model.eval()
