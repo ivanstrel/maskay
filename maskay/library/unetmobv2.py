@@ -3,11 +3,6 @@ import pathlib
 import subprocess
 import numpy as np
 
-try:
-    import torch
-except ImportError:
-    raise ImportError("Please install the following packages: torch.")
-
 from maskay.torch import Module
 from maskay.utils import get_models_path, softmax
 
@@ -38,6 +33,11 @@ def model_setup():
     # Check if packages are installed
     is_external_package_installed = []
 
+    try:
+        import torch
+    except ImportError:
+        is_external_package_installed.append("torch")
+    
     try:
         import pytorch_lightning as pl
     except ImportError:
